@@ -3,6 +3,7 @@ package davidegiliberti.capstone_backend.controllers;
 import davidegiliberti.capstone_backend.entities.Utente;
 import davidegiliberti.capstone_backend.enums.RuoloUtente;
 import davidegiliberti.capstone_backend.exceptions.BadRequestException;
+import davidegiliberti.capstone_backend.exceptions.NotFoundException;
 import davidegiliberti.capstone_backend.payloads.UtenteLoginDTO;
 import davidegiliberti.capstone_backend.payloads.UtenteLoginRespDTO;
 import davidegiliberti.capstone_backend.payloads.UtentePayloadDTO;
@@ -19,7 +20,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/authorization")
 public class AuthorizationController {
     @Autowired
     private AuthorizationsService authorizationsService;
@@ -28,10 +29,14 @@ public class AuthorizationController {
 
     @PostMapping("/login")
     public UtenteLoginRespDTO login(@RequestBody UtenteLoginDTO body) {
-        Utente found = this.utenteService.findByEmail(body.email());
-        RuoloUtente ruolo = found.getRuolo();
-        UUID utenteId = found.getId();
-        return new UtenteLoginRespDTO(this.authorizationsService.checkAndCreateToken(body), ruolo, utenteId);
+        try {
+            Utente found = this.utenteService.findByEmail(body.email());
+            RuoloUtente ruolo = found.getRuolo();
+            UUID utenteId = found.getId();
+            return new UtenteLoginRespDTO(this.authorizationsService.checkAndCreateToken(body), ruolo, utenteId);
+        } catch (NotFoundException ex) {
+            throw new NotFoundException("L'email " + body.email() + " non è stata trovata");
+        }
     }
 
     @PostMapping("/register")
