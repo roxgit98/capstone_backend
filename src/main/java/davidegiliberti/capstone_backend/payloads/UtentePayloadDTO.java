@@ -19,6 +19,7 @@ public record UtentePayloadDTO(
         String nome,
         @NotEmpty(message = "Cognome obbligatorio")
         @Size(min = 5, max = 20, message = "Il Cognome deve contenere dai 5 ai 20 caratteri")
-        String cognome
+        String cognome,
+        String avatar
 ) {
 }

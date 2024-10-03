@@ -18,7 +18,7 @@ import java.util.UUID;
 @ToString
 @Entity
 @Table(name = "utenti")
-@JsonIgnoreProperties({"password", "role", "authorities", "enabled", "accountNonLocked", "accountNonExpired", "credentialsNonExpired"})
+@JsonIgnoreProperties({"password", "ruolo", "authorities", "enabled", "accountNonLocked", "accountNonExpired", "credentialsNonExpired"})
 public class Utente implements UserDetails {
     @Id
     @GeneratedValue
@@ -32,10 +32,10 @@ public class Utente implements UserDetails {
     private String avatar;
     @Enumerated(EnumType.STRING)
     private RuoloUtente ruolo;
-//    @ManyToMany
-//    private List<Videogioco> videogioco;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Videogioco> videogioco;
 
-    public Utente(String username, String email, String password, String nome, String cognome, String avatar) {
+    public Utente(String username, String email, String password, String nome, String cognome, String avatar, List<Videogioco> videogioco) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -43,11 +43,12 @@ public class Utente implements UserDetails {
         this.cognome = cognome;
         this.avatar = avatar;
         this.ruolo = RuoloUtente.USER;
+        this.videogioco = videogioco;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(this.ruolo.name()));
     }
-    
+
 }

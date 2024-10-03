@@ -3,6 +3,7 @@ package davidegiliberti.capstone_backend.services;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import davidegiliberti.capstone_backend.entities.Utente;
+import davidegiliberti.capstone_backend.entities.Videogioco;
 import davidegiliberti.capstone_backend.exceptions.BadRequestException;
 import davidegiliberti.capstone_backend.exceptions.NotFoundException;
 import davidegiliberti.capstone_backend.payloads.UtentePayloadDTO;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -57,7 +60,8 @@ public class UtenteService {
         if (utenteRepository.existsByEmail(body.email()))
             throw new BadRequestException("Email già utilizzata");
         String avatar = "https://ui-avatars.com/api/?name=" + body.nome() + "+" + body.cognome();
-        Utente newUtente = new Utente(body.username(), body.email(), bcrypt.encode(body.password()), body.nome(), body.cognome(), avatar);
+        List<Videogioco> videogioco = new ArrayList<>();
+        Utente newUtente = new Utente(body.username(), body.email(), bcrypt.encode(body.password()), body.nome(), body.cognome(), avatar, videogioco);
 
         return utenteRepository.save(newUtente);
     }
