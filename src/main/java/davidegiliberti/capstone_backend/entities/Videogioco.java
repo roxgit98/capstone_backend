@@ -25,13 +25,15 @@ public class Videogioco {
     private String boxArt;
     private String piattaforma;
     private String genere;
+    private int totaleOreDiGioco;
 
-    public Videogioco(String titolo, String descrizione, int annoDiPubblicazione, String boxArt, String piattaforma, String genere) {
+    public Videogioco(String titolo, String descrizione, int annoDiPubblicazione, String boxArt, String piattaforma, String genere, int totaleOreDiGioco) {
         this.titolo = titolo;
         this.descrizione = descrizione;
         this.annoDiPubblicazione = annoDiPubblicazione;
         this.boxArt = boxArt;
         this.piattaforma = piattaforma;
         this.genere = genere;
+        this.totaleOreDiGioco = totaleOreDiGioco;
     }
 }

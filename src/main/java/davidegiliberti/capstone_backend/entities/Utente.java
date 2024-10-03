@@ -32,8 +32,8 @@ public class Utente implements UserDetails {
     private String avatar;
     @Enumerated(EnumType.STRING)
     private RuoloUtente ruolo;
-    @ManyToMany
-    private List<Videogioco> videogioco;
+//    @ManyToMany
+//    private List<Videogioco> videogioco;
 
     public Utente(String username, String email, String password, String nome, String cognome, String avatar) {
         this.username = username;
@@ -49,9 +49,5 @@ public class Utente implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(this.ruolo.name()));
     }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
+    
 }
