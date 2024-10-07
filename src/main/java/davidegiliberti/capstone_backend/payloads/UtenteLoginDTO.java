@@ -9,7 +9,7 @@ public record UtenteLoginDTO(
         @Email(message = "Inserisci un'email valida")
         String email,
         @NotEmpty(message = "inserisci una password")
-        @Size(min = 8, max = 12, message = "La password deve contenere dai 8 ai 12 caratteri")
+        @Size(min = 8, message = "La password deve contenere almeno 8 caratteri")
         String password
 ) {
 }

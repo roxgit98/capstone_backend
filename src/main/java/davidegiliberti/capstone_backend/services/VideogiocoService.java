@@ -41,6 +41,7 @@ public class VideogiocoService {
         Videogioco found = this.videogiocoRepository.findById(videogiocoId).orElseThrow(() -> new NotFoundException(videogiocoId));
         if (found == null) throw new NotFoundException(videogiocoId);
         found.setTitolo(body.titolo());
+        found.setDescrizione(body.descrizione());
         found.setAnnoDiPubblicazione(body.annoDiPubblicazione());
         found.setPiattaforma(body.piattaforma());
         found.setGenere(body.genere());
@@ -50,7 +51,7 @@ public class VideogiocoService {
 
     public Videogioco saveVideogioco(VideogiocoPayloadDTO body) {
         if (videogiocoRepository.existsByTitolo(body.titolo()))
-            throw new BadRequestException("Questo titolo è già presente");
+            throw new BadRequestException("Questo titolo è già presente nel catalogo");
         String boxArt = "https://ui-avatars.com/api/?name=" + body.titolo();
         Videogioco newVideogioco = new Videogioco(body.titolo(), body.descrizione(), body.annoDiPubblicazione(), boxArt, body.piattaforma(), body.genere(), body.totaleOreDiGioco());
 

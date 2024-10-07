@@ -28,6 +28,7 @@ public class AuthorizationController {
     private UtenteService utenteService;
 
     @PostMapping("/login")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public UtenteLoginRespDTO login(@RequestBody UtenteLoginDTO body) {
         try {
             Utente found = this.utenteService.findByEmail(body.email());
@@ -44,7 +45,7 @@ public class AuthorizationController {
     public UtenteRespDTO save(@RequestBody @Validated UtentePayloadDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
             String msg = validation.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage()).collect(Collectors.joining(". "));
-            throw new BadRequestException("Errore nel payload " + msg);
+            throw new BadRequestException("Errore nel payload: " + msg);
         } else {
             return new UtenteRespDTO(this.utenteService.saveUtente(body).getId());
         }

@@ -12,13 +12,13 @@ public record UtentePayloadDTO(
         @Email(message = "Inserisci un'email valida")
         String email,
         @NotEmpty(message = "Password obbligatoria")
-        @Size(min = 8, max = 12, message = "La password deve contenere dai 8 ai 12 caratteri")
+        @Size(min = 8, message = "La password deve contenere almeno 8 caratteri")
         String password,
         @NotEmpty(message = "Nome obbligatorio")
-        @Size(min = 5, max = 10, message = "Il nome deve contenere dai 5 ai 10 caratteri")
+        @Size(max = 10, message = "Il nome deve contenere massimo 10 caratteri")
         String nome,
         @NotEmpty(message = "Cognome obbligatorio")
-        @Size(min = 5, max = 20, message = "Il Cognome deve contenere dai 5 ai 20 caratteri")
+        @Size(max = 20, message = "Il Cognome deve contenere massimo 20 caratteri")
         String cognome,
         String avatar
 ) {

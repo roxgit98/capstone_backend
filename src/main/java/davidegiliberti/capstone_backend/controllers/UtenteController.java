@@ -27,6 +27,7 @@ public class UtenteController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseStatus(HttpStatus.FOUND)
     public Page<Utente> findAll(@RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "15") int size,
                                 @RequestParam(defaultValue = "id") String sortBy) {
@@ -34,6 +35,8 @@ public class UtenteController {
     }
 
     @GetMapping("/{utenteId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseStatus(HttpStatus.FOUND)
     public Utente findById(@PathVariable UUID utenteId) {
         Utente found = this.utenteService.findById(utenteId);
         if (found == null) throw new NotFoundException(utenteId);
@@ -45,7 +48,7 @@ public class UtenteController {
     public Utente findAndUpdate(@PathVariable UUID utenteId, @RequestBody @Validated UtentePayloadDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
             String msg = validation.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage()).collect(Collectors.joining(". "));
-            throw new BadRequestException("Errore nel payload " + msg);
+            throw new BadRequestException("Errore nel payload: " + msg);
         } else {
             return this.utenteService.findAndUpdate(utenteId, body);
         }
@@ -53,7 +56,7 @@ public class UtenteController {
 
     @DeleteMapping("/{utenteId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.GONE)
     public void findAndDelete(@PathVariable UUID utenteId) {
         this.utenteService.findAndDelete(utenteId);
     }
@@ -69,7 +72,7 @@ public class UtenteController {
     }
 
     @DeleteMapping("/me")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.GONE)
     public void deleteProfile(@AuthenticationPrincipal Utente currentUser) {
         this.utenteService.findAndDelete(currentUser.getId());
     }
