@@ -77,8 +77,8 @@ public class UtenteController {
         this.utenteService.findAndDelete(currentUser.getId());
     }
 
-    @PatchMapping("/me")
-    public Utente uploadAvatar(@AuthenticationPrincipal Utente utente, @RequestParam("pic") MultipartFile pic) throws IOException {
-        return this.utenteService.uploadAvatar(utente.getId(), pic);
+    @PatchMapping("/me/avatar")
+    public Utente uploadAvatar(@AuthenticationPrincipal Utente utente, @RequestParam("file") MultipartFile file) throws IOException {
+        return this.utenteService.uploadAvatar(utente.getId(), file);
     }
 }
