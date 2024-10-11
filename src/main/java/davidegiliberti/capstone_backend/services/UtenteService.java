@@ -30,6 +30,8 @@ public class UtenteService {
     private PasswordEncoder bcrypt;
     @Autowired
     private Cloudinary cloudinary;
+    @Autowired
+    private VideogiocoService videogiocoService;
 
     public Page<Utente> findAll(int page, int size, String sortBy) {
         if (page > 100) page = 100;
@@ -84,5 +86,27 @@ public class UtenteService {
 
         found.setAvatar(url);
         return this.utenteRepository.save(found);
+    }
+
+    public Utente addFavorite(UUID utenteId, UUID videogiocoId) {
+        Utente foundUtente = this.findById(utenteId);
+        Videogioco foundVideogioco = this.videogiocoService.findById(videogiocoId);
+
+        foundUtente.addVideogioco(foundVideogioco);
+
+        return this.utenteRepository.save(foundUtente);
+    }
+
+    public Utente removeFavorite(UUID utenteId, UUID videogiocoId) {
+        Utente foundUtente = this.findById(utenteId);
+        Videogioco foundVideogioco = this.videogiocoService.findById(videogiocoId);
+
+        foundUtente.removeVideogioco(foundVideogioco);
+
+        return this.utenteRepository.save(foundUtente);
+    }
+
+    public List<Utente> filterList(UUID videogiocoId) {
+        return this.utenteRepository.findAllUtenti(videogiocoId);
     }
 }

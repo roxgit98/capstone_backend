@@ -2,6 +2,7 @@ package davidegiliberti.capstone_backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import davidegiliberti.capstone_backend.enums.RuoloUtente;
+import davidegiliberti.capstone_backend.exceptions.BadRequestException;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -51,4 +52,20 @@ public class Utente implements UserDetails {
         return List.of(new SimpleGrantedAuthority(this.ruolo.name()));
     }
 
+    public void addVideogioco(Videogioco videogioco) {
+        if (!this.videogioco.contains(videogioco)) {
+            this.videogioco.add(videogioco);
+        } else {
+            throw new BadRequestException("Il Titolo è già presente nel catalogo");
+        }
+
+    }
+
+    public void removeVideogioco(Videogioco videogioco) {
+        if (this.videogioco.contains(videogioco)) {
+            this.videogioco.remove(videogioco);
+        } else {
+            throw new BadRequestException("Il Titolo non è presente nel catalogo");
+        }
+    }
 }

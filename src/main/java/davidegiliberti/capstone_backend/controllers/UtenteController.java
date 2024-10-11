@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -81,4 +82,22 @@ public class UtenteController {
     public Utente uploadAvatar(@AuthenticationPrincipal Utente utente, @RequestParam("file") MultipartFile file) throws IOException {
         return this.utenteService.uploadAvatar(utente.getId(), file);
     }
+
+    @PatchMapping("/me/addGame/{videogiocoId}")
+    public Utente addGame(@AuthenticationPrincipal Utente utente, @PathVariable UUID videogiocoId) {
+        return this.utenteService.addFavorite(utente.getId(), videogiocoId);
+    }
+
+    @PatchMapping("/me/removeGame/{videogiocoId}")
+    public Utente removeGame(@AuthenticationPrincipal Utente utente, @PathVariable UUID videogiocoId) {
+        return this.utenteService.removeFavorite(utente.getId(), videogiocoId);
+    }
+
+    @GetMapping("/filterUser/{videogiocoId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Utente> filterUtenti(@PathVariable UUID videogiocoId) {
+        return this.utenteService.filterList(videogiocoId);
+    }
+
+
 }
