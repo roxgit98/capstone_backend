@@ -25,8 +25,6 @@ public class VideogiocoController {
     private VideogiocoService videogiocoService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @ResponseStatus(HttpStatus.FOUND)
     public Page<Videogioco> findAll(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "15") int size,
                                     @RequestParam(defaultValue = "id") String sortBy) {
@@ -35,7 +33,6 @@ public class VideogiocoController {
 
     @GetMapping("/{videogiocoId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @ResponseStatus(HttpStatus.FOUND)
     public Videogioco findById(@PathVariable UUID videogiocoId) {
         Videogioco found = this.videogiocoService.findById(videogiocoId);
         if (found == null) throw new NotFoundException(videogiocoId);
@@ -68,7 +65,6 @@ public class VideogiocoController {
 
     @DeleteMapping("/{videogiocoId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @ResponseStatus(HttpStatus.GONE)
     public void findAndDelete(@PathVariable UUID videogiocoId) {
         this.videogiocoService.findAndDelete(videogiocoId);
     }

@@ -7,7 +7,6 @@ import davidegiliberti.capstone_backend.payloads.UtentePayloadDTO;
 import davidegiliberti.capstone_backend.services.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -28,7 +27,6 @@ public class UtenteController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    @ResponseStatus(HttpStatus.FOUND)
     public Page<Utente> findAll(@RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "15") int size,
                                 @RequestParam(defaultValue = "id") String sortBy) {
@@ -37,7 +35,6 @@ public class UtenteController {
 
     @GetMapping("/{utenteId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @ResponseStatus(HttpStatus.FOUND)
     public Utente findById(@PathVariable UUID utenteId) {
         Utente found = this.utenteService.findById(utenteId);
         if (found == null) throw new NotFoundException(utenteId);
@@ -57,7 +54,6 @@ public class UtenteController {
 
     @DeleteMapping("/{utenteId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @ResponseStatus(HttpStatus.GONE)
     public void findAndDelete(@PathVariable UUID utenteId) {
         this.utenteService.findAndDelete(utenteId);
     }
@@ -73,7 +69,6 @@ public class UtenteController {
     }
 
     @DeleteMapping("/me")
-    @ResponseStatus(HttpStatus.GONE)
     public void deleteProfile(@AuthenticationPrincipal Utente currentUser) {
         this.utenteService.findAndDelete(currentUser.getId());
     }
