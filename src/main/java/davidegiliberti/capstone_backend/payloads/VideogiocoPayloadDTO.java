@@ -16,7 +16,7 @@ public record VideogiocoPayloadDTO(
         String boxArt,
         @NotEmpty(message = "Piattaforma obbligatoria")
         String piattaforma,
-        @NotNull(message = "Genere obbligatorio")
+        @NotEmpty(message = "Genere obbligatorio")
         String genere,
         int totaleOreDiGioco
 ) {
