@@ -19,7 +19,7 @@ import java.util.UUID;
 @ToString
 @Entity
 @Table(name = "utenti")
-@JsonIgnoreProperties({"password", "ruolo", "authorities", "enabled", "accountNonLocked", "accountNonExpired", "credentialsNonExpired"})
+@JsonIgnoreProperties({"password", "authorities", "enabled", "accountNonLocked", "accountNonExpired", "credentialsNonExpired"})
 public class Utente implements UserDetails {
     @Id
     @GeneratedValue
@@ -56,7 +56,7 @@ public class Utente implements UserDetails {
         if (!this.videogioco.contains(videogioco)) {
             this.videogioco.add(videogioco);
         } else {
-            throw new BadRequestException("Il Titolo è già presente nel catalogo");
+            throw new BadRequestException("Il Titolo è già presente nella collezione");
         }
 
     }
@@ -65,7 +65,7 @@ public class Utente implements UserDetails {
         if (this.videogioco.contains(videogioco)) {
             this.videogioco.remove(videogioco);
         } else {
-            throw new BadRequestException("Il Titolo non è presente nel catalogo");
+            throw new BadRequestException("Il Titolo non è presente nella collezione");
         }
     }
 }
