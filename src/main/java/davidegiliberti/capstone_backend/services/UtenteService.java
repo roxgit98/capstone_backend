@@ -51,7 +51,7 @@ public class UtenteService {
         if (found == null) throw new NotFoundException(utenteId);
         found.setUsername(body.username());
         found.setEmail(body.email());
-        found.setPassword(body.password());
+        found.setPassword(bcrypt.encode(body.password()));
         found.setNome(body.nome());
         found.setCognome(body.cognome());
 

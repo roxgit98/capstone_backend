@@ -34,7 +34,9 @@ public class AuthorizationController {
             Utente found = this.utenteService.findByEmail(body.email());
             RuoloUtente ruolo = found.getRuolo();
             UUID utenteId = found.getId();
-            return new UtenteLoginRespDTO(this.authorizationsService.checkAndCreateToken(body), ruolo, utenteId);
+            String username = found.getUsername();
+            String avatar = found.getAvatar();
+            return new UtenteLoginRespDTO(this.authorizationsService.checkAndCreateToken(body), ruolo, utenteId, username, avatar);
         } catch (NotFoundException ex) {
             throw new NotFoundException("L'email " + body.email() + " non è stata trovata");
         }
