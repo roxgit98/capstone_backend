@@ -46,6 +46,7 @@ public class VideogiocoService {
         found.setAnnoDiPubblicazione(body.annoDiPubblicazione());
         found.setPiattaforma(body.piattaforma());
         found.setGenere(body.genere());
+        found.setTotaleOreDiGioco(body.totaleOreDiGioco());
 
         return videogiocoRepository.save(found);
     }
