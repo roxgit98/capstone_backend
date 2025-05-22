@@ -42,7 +42,6 @@ public class UtenteController {
     }
 
     @PutMapping("/{utenteId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public Utente findAndUpdate(@PathVariable UUID utenteId, @RequestBody @Validated UtentePayloadDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
             String msg = validation.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage()).collect(Collectors.joining(". "));
