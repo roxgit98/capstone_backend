@@ -39,7 +39,7 @@ public class Config {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Arrays.asList("https://capstone-frontend-rosy.vercel.app/", "https://capstone-frontend-roxgit98s-projects.vercel.app/", "https://capstone-frontend-git-master-roxgit98s-projects.vercel.app/"));
         configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
 
